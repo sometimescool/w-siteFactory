@@ -1,0 +1,160 @@
+.sf-calendar{
+    line-height:1.5em;
+    color: #4b4646;
+}
+.sf-calendar .sf-calendar-buttons{
+    text-align: center;
+    font-size: 2em;
+    color: #5b5959;
+}
+.sf-calendar .sf-calendar-buttons .sf-button-next, 
+.sf-calendar .sf-calendar-buttons .sf-button-next-month,
+.sf-calendar .sf-calendar-buttons .sf-button-previous,
+.sf-calendar .sf-calendar-buttons .sf-button-previous-month{
+    padding-left:6px;
+    padding-right:6px;
+    display:inline-block;
+    cursor: pointer;
+    height: 1.3em;
+} 
+.sf-layout-month{
+    width:281px;
+    min-height:150px;
+    border: 1px solid #918989;
+    background-color: #faf8f8;
+    display:inline-block;
+    margin-right:4px;
+    border-radius: 10px 10px 2px 2px;
+    -moz-border-radius: 10px 10px 2px 2px;
+    -webkit-border-radius: 10px 10px 2px 2px;
+}
+.sf-header-month{
+    position: relative;
+    width: 100%;
+    display: table;
+    border-bottom: 1px solid #918989;;
+    text-align: center;
+}
+.sf-month-content{
+    width:100%;
+    padding:10px;
+    margin:0px;
+}
+.sf-month-content th{
+    padding:0px;
+    border:0px;
+    width:14.3%;
+}
+.sf-month-content td{
+    text-align: center;
+    height: 1.5em;
+    padding: 0px;
+    border: 0px;
+}
+.sf-notfree:before{
+    content: "___";
+    position: absolute;
+    left: 8px;
+    top: -7px;
+    font-size: small;
+    transform: rotate(-20deg);
+}
+.sf-month-content td .sf-rented, 
+.sf-calendar-footer .sf-rented, 
+.ui-widget-content .sf-rented > a.ui-state-default{
+    background-color: rgba(14, 14, 14,0.1);
+    color: rgba(14,14,14,0.2);
+}
+.sf-notinit{
+    background-color: white;
+    color: rgba(14,14,14,0.2);
+}
+.sf-month-content .sf-veryhigh, 
+.sf-calendar-footer .sf-veryhigh, 
+.sf-tarifs .sf-veryhigh, 
+.ui-widget-content .sf-veryhigh > a.ui-state-default{
+        background-color:rgba(255,0,0,0.6);
+}
+.sf-month-content .sf-high, 
+.sf-calendar-footer .sf-high, 
+.sf-tarifs .sf-high, 
+.ui-widget-content .sf-high > a.ui-state-default{
+        background-color:rgba(255,128,64,1);
+}
+.sf-month-content .sf-highless, 
+.sf-calendar-footer .sf-highless, 
+.sf-tarifs .sf-highless, 
+.ui-widget-content .sf-highless > a.ui-state-default{
+        background-color:rgba(255,128,64,0.5);
+}
+.sf-month-content .sf-low, 
+.sf-calendar-footer .sf-low, 
+.sf-tarifs .sf-low, 
+.ui-widget-content .sf-low > a.ui-state-default{
+        background-color:rgba(255,255,0,0.7);
+}
+.sf-month-content .sf-lowless, 
+.sf-calendar-footer .sf-lowless, 
+.sf-tarifs .sf-lowless, 
+.ui-widget-content .sf-lowless > a.ui-state-default{
+        background-color:rgba(255,255,0,0.3);
+}
+.sf-month-content .sf-verylow, 
+.sf-calendar-footer .sf-verylow, 
+.sf-tarifs sf-.verylow, 
+.ui-widget-content .sf-verylow > a.ui-state-default{
+        background-color:rgba(0,255,0,0.5) ;
+}
+.sf-month-content .sf-calendar-day{
+    position:relative;
+    z-index:1;
+    vertical-align:middle;
+}
+.sf-month-content .sf-calendar-day-morning{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 50%;
+    text-align: center;
+    height: 100%;
+    z-index: -1;
+    border-radius:  6px 0px 0px 24px;
+    -moz-border-radius: 6px 0px 0px 24px;
+    -webkit-border-radius: 6px 0px 0px 24px;
+}
+.sf-month-content .sf-calendar-day-afternoon{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 50%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 0px 24px 6px 0px;
+    -moz-border-radius: 0px 24px 6px 0px;
+    -webkit-border-radius: 0px 24px 6px 0px;
+}							 
+.sf-calendar-footer .sf-icon-legend,
+.sf-tarifs .sf-icon-legend , 
+.sf-icon-legend{
+    width:16px;
+    height:10px;
+    margin-right:6px;
+    border: 1px solid gray;
+    display : inline-block;
+    vertical-align: middle;
+    border-radius: 2px 9px 2px 9px;
+    -moz-border-radius: 2px 9px 2px 9px;
+    -webkit-border-radius: 2px 9px 2px 9px;
+}
+.sf-calendar-footer .sf-calendar-legend,
+.sf-tarifs .sf-calendar-legend{
+    display : inline-block;
+    margin-right:14px;
+    min-width:30%;
+}
+.sf-tarifs .sf-calendar-legend .sf-text-legend{
+    display : inline-block;
+}
+.sf-tarifs .sf-calendar-legend .sf-text-tarif{
+    display : inline-block;
+}

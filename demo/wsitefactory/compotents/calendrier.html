@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>w-siteFactory demo calendrier</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../dist/styles/css/w-siteFactory.min.css">
+    <script src="../dist/w-siteFactory-jq.min.js" type="text/javascript"></script>
+	<script>
+		jQuery(document).ready(function () {
+			wsiteFactory.calendar("calendrier");
+		});
+    </script>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <img src="../img/Baniere_WSF_920_2.png" alt="">
+        </header>
+        <a href="../index.html" class="backAccueil">Retour à page d'accueil</a>
+        <h2>Calendrier</h2>
+        <div style="display: block;max-width: 862px;margin: auto; margin-top:40px">
+            <div id="calendrier" class="sf-calendar" data-params='{"monthCount":3,"dataRoot":"../data/","availabilities":"availabilities.json","periods":"periods.json","legend":"legend.json"}'></div>
+        </div>
+    </div>
+</body>
+
+</html>

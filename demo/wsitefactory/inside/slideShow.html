@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>w-siteFactory demo slideShow</title>
+    <link rel="stylesheet" href="../dist/styles/css/w-siteFactory.min.css">
+    <script src="../dist/w-siteFactory-jq.min.js" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function () {
+            wsiteFactory.slideShowFactory();
+        });
+    </script>
+</head>
+
+<body>
+    <div style="display: block;max-width: 650px;margin: auto; margin-top:40px">
+        <div class="layout-sliderShow sf-slideShow" data-params='{"showCaption":true,"showThumbnail":true,"imageRoot":"../img/","dataLocation":"../data/sliderShow.json"}'></div>
+    </div>
+</body>
+
+</html>

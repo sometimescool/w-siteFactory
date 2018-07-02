@@ -1,0 +1,19 @@
+[
+    {"name":"slider01.jpg","caption":"Libellé image slide 01"},
+    {"name":"slider15.jpg","caption":"Libellé image slide 02"},
+    {"name":"slider02.jpg","caption":"Libellé image slide 03"},
+	{"name":"slider16.jpg","caption":"Libellé image slide 04"},
+    {"name":"slider03.jpg","caption":"Libellé image slide 05"},
+    {"name":"slider14.jpg","caption":"Libellé image slide 06"},
+    {"name":"slider04.jpg","caption":"Libellé image slide 07"},
+    {"name":"slider13.jpg","caption":"Libellé image slide 08"},
+    {"name":"slider05.jpg","caption":"Libellé image slide 09"},
+    {"name":"slider12.jpg","caption":"Libellé image slide 10"},
+    {"name":"slider06.jpg","caption":"Libellé image slide 11"},
+    {"name":"slider11.jpg","caption":"Libellé image slide 12"},
+    {"name":"slider07.jpg","caption":"Libellé image slide 13"},
+    {"name":"slider10.jpg","caption":"Libellé image slide 14"},
+    {"name":"slider08.jpg","caption":"Libellé image slide 15"},
+	{"name":"slider09.jpg","caption":"Libellé image slide 16"}
+
+]

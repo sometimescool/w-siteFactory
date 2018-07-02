@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>w-siteFactory demo calendrier</title>
+    <link rel="stylesheet" href="../dist/styles/css/w-siteFactory.min.css">
+    <script src="../dist/w-siteFactory-jq.min.js" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function () {
+            wsiteFactory.calendarFactory();
+        });
+    </script>
+</head>
+
+<body>
+    <div style="display: block;max-width: 862px;margin: auto;">
+        <div class="sf-calendar" data-params='{"monthCount":3,"dataRoot":"../data/","availabilities":"availabilities.json","periods":"periods.json","legend":"legend.json"}'></div>
+    </div>
+</body>
+
+</html>

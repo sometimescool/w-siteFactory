@@ -1,0 +1,92 @@
+.sf-imgzoom-container{
+    text-align:center;
+    position:fixed;
+    width:100%;
+    height:0px;
+    left:0px;
+    top:10%;
+    z-index:1000;
+}
+.sf-image-frame{
+    display:inline-block;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    margin:6px;
+    opacity:0;
+    transition:opacity .3s;
+}
+.sf-zoom-image{
+    width:100%;
+    box-shadow: -1px 2px 5px 1px rgba(0,0,0,.3);
+}
+.sf-close-zoom {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    cursor:pointer;
+    border-radius: 16px 16px 16px 16px;
+    -moz-border-radius: 16px 16px 16px 16px;
+    -webkit-border-radius: 16px 16px 16px 16px;
+    opacity: 0.7;
+    background-color:white;
+    width: 24px;
+    height: 24px;
+    font-size: initial;
+}
+.sf-close-zoom-btn{
+    color: #777
+}
+
+.sf-close-zoom .sf-close-zoom-btn:before{
+    opacity: 1;
+    display: block;
+    font-size: 22px;
+    width: 24px;
+    height: 24px;
+    right: 0px;
+    position: absolute;
+    top: 1px;
+    padding: initial;
+    margin: initial;
+}
+.sf-imgZoom.sf-noicon{
+    cursor:pointer;
+}
+.sf-frame-image{
+    all: initial;
+    position:relative;
+    top:0px;
+    left:0px;
+}
+.sf-zoom-open{
+    position: relative;
+    display: block;
+    float: right;
+    height: 0;
+    z-index: 10;
+    top: 4px;
+    right: 0px;
+    cursor:pointer;
+}
+.sf-zoom-open .sf-icon-resize-full-2{
+    position: absolute;
+    top: 5px;
+    left: -29px;
+    border-radius: 12px 12px 12px 12px;
+    -moz-border-radius:  12px 12px 12px 12px;
+    -webkit-border-radius: 12px 12px 12px 12px;
+    opacity: 0.7;
+    background-color: #fff;
+    color: #666060;
+    width: 24px;
+    height: 24px;
+}
+.sf-zoom-open .sf-icon-resize-full-2:before{
+    padding: 4px 0 0 0px;
+    display: block;
+    width: 18px;
+}
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE11+ CSS styles go here */
+}

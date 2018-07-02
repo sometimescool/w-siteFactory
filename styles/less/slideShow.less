@@ -1,0 +1,125 @@
+.sf-slideShow{
+  position: relative;
+}
+.sf-img-container-slide {
+  margin: 0.4%;
+  position: relative;
+}
+.sf-slide-btn-left, .sf-slide-btn-right{
+  position:absolute;
+  top:40%;
+  cursor: pointer;
+  color:#000000;
+  width:20px;
+  height:50px;
+}
+.sf-slide-btn-left>i, .sf-slide-btn-right>i{
+  display:block;
+  height:100%;
+}
+.sf-slide-btn-left{
+  left:1%;
+}
+.sf-slide-btn-right{
+  right:1%;
+}
+.sf-slide-btn-left{
+ background: url(../img/slide-btn-right.png) no-repeat right center;
+ transform: scaleX(-1);
+}
+.sf-slide-btn-right{
+  background: url(../img/slide-btn-right.png) no-repeat right center;
+}
+.sf-slideShow .sf-slide{
+  background-color: #FFFFFF;
+  position:relative;
+  box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.3);
+  padding:10px;
+  margin-bottom: 10px;
+}
+.sf-slideShow .sf-slide-caption{
+  text-align: center;
+  color: #343232;;
+  position: relative;
+  top: 1%;
+}
+.sf-slideShow .sf-numbertext{
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 1%;
+}
+.sf-slideShow .sf-thumbnail{
+  width:100%;
+  position:relative;
+  left:0px;
+  right:0px;
+}
+.sf-thumbnail-btns{
+  position:absolute;
+  width:100%;
+  color: #5b5959;
+}
+.sf-thumbnail-btn-left .sf-icon-angle-left:before, .sf-thumbnail-btn-right .sf-icon-angle-right:before{
+  padding-top: 8px;
+  display: block;
+  margin: 0px;
+}
+.sf-thumbnail-btn-left .sf-icon-angle-left:before{
+    margin-left: 0px;
+}
+.sf-thumbnail-btn-left, .sf-thumbnail-btn-right{
+  width: 30px;
+  display:block;
+  cursor: pointer;
+  font-size: 2.5em;
+}
+.sf-thumbnail-btn-left{
+  float:left;
+}
+.sf-thumbnail-btn-right{
+  float:right;
+}
+.sf-slideShow .sf-thumbnail-container{
+  width:calc(100% - 60px);
+  height:50px;
+  position:relative;
+  left:30px;
+  overflow:hidden;
+}
+.sf-slideShow .sf-slide-thunbnail-row{
+  height:50px;
+  padding-top: 3px;
+  display:block;
+  position:relative;
+  left:0;
+  top:0;
+  transition:left 1s;
+}
+.sf-slideShow .sf-slide-thumbnail-column{
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-radius: 2px;
+  height: 46px;
+  width: 60px;
+  opacity: .6;
+  display: inline-block;
+  margin: 0 1px 0 1px;
+  cursor: pointer;
+}
+
+.sf-slideShow .sf-slide-thunbnail-row .sf-slide-thumbnail-column.sf-current{
+  opacity:1;
+}
+.sf-slideShow .sf-slide img.sf-img-slide-0{
+  position:absolute;
+  top:0px;
+  left:0px;
+}
+.sf-slideShow .sf-slide img{
+  border-radius: 2px;
+  width:100%;
+  transition:opacity .5s;
+}

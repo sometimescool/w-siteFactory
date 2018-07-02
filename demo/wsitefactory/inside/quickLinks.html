@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>w-siteFactory demo boutons liens</title>
+    <link rel="stylesheet" href="../dist/styles/css/w-siteFactory.min.css">
+    <script src="../dist/w-siteFactory-jq.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <script>
+        jQuery(document).ready(function () {
+            wsiteFactory.linkSectionFactory("#header",{"position":"bottom,left"});
+        });
+    </script>
+        <header id="header">
+            <img style="width:100%" src="../img/Baniere_WSF_920_2.png" alt="">
+        </header>
+        <h3>Introduction</h3>
+        <P style="height:200px"></P>
+        <h3>Mon premier paragraphe</h3>
+        <P style="height:200px"></P>
+        <h3 class="sf-link">Mon deuxième paragraphe</h3>
+        <P style="height:200px"></P>
+        <h3 class="sf-link" data-params='{"highlight":true}'>Conclusion</h3>
+        <P style="height:200px"></P>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>w-siteFactory demo calendrier</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../dist/styles/css/w-siteFactory.min.css">
+    <script src="../dist/w-siteFactory-jq.min.js" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function () {
+            wsiteFactory.listFolder();
+        });
+    </script>
+    <style>
+    ul.myClass-hierarchy ul, ul.myClass-hierarchy li{
+        padding:0 0 0 20px;
+        color:#d9ad00;;
+    }
+    ul.myClass-hierarchy li.sf-contents:before{
+        color:rgb(70, 68, 68);
+    }
+    ul.myClass-hierarchy li.sf-container:before{
+        color:rgb(166, 166, 175);
+    }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <img src="../img/Baniere_WSF_920_2.png" alt="">
+        </header>
+        <a href="../index.html" class="backAccueil">Retour à page d'accueil</a>
+        <h2>Type dossiers/fichiers</h2>
+        <div style="display: block;max-width: 862px;margin: auto; margin-top:40px">
+
+            <ul class="sf-hierarchy sf-type-folder myClass-hierarchy">
+                <li>Dossier 1
+                    <ul>
+                        <li>Dossier 2
+                            <ul>
+                                <li>Fichier 1</li>
+                                <li>Fichier 2</li>
+                                <li>Fichier 3</li>
+                                <li>Fichier 4</li>
+                                <li>Dossier 3
+                                    <ul>
+                                        <li>Fichier 5</li>
+                                        <li>Fichier 6</li>
+                                        <li>Fichier 7</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Dossier 4
+                            <ul>
+                                <li>Fichier 8</li>
+                                <li>Fichier 9</li>
+                                <li>Fichier 10</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</body>
+
+</html>
