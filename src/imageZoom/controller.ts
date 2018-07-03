@@ -6,8 +6,9 @@ import { CDom } from "../helpers/helper";
 
 class CImgZoom{
     private static _instance:CImgZoom = new CImgZoom();
-    $container:JQuery<HTMLElement> | null=null;
-    $frame:JQuery<HTMLElement> | null=null;
+    private $container:JQuery<HTMLElement> | null=null;
+    private $frame:JQuery<HTMLElement> | null=null;
+    private $btnClose:JQuery<HTMLElement> | null=null;
     constructor(){
         if(CImgZoom._instance){
             throw new Error("Error: Instantiation failed: Use CImgZoom.getInstance() instead of new.");
@@ -28,8 +29,8 @@ class CImgZoom{
                 (sizes:any)=>{
                     self.$container=self.mainContainer();
                     self.$frame=self.frame(maxWidth?Math.min(sizes.width,maxWidth):sizes.width);
-                    let $btnClose:JQuery<HTMLElement>=self.closeButton();
-                    self.$frame.append($btnClose);
+                    this.$btnClose=self.closeButton();
+                    self.$frame.append(this.$btnClose);
                     self.$frame.append(self.cloneCleanImage($img));
                     self.$container.append(self.$frame);
                     let $body = jQuery("body");
@@ -77,7 +78,7 @@ class CImgZoom{
     private destroy(){
         if(this.$frame)  this.$frame.remove();
         if(this.$container){
-            this.$container.get(0).removeEventListener("click", (e: Event) => this.close(e), false);
+            this.$btnClose.get(0).removeEventListener("click", (e: Event) => this.close(e), false);
             this.$container.remove();
         }
         this.$container=null;
