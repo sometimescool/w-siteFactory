@@ -8,15 +8,18 @@ export class CImageDetailView {
 
     }
     public draw(imageUrl: string, maxwidth: number) {
+        let maxheight:number=screen.height;
         this.$detail = jQuery(`<div class="sf-img-detail-result" style="background-image:url('${imageUrl}')"></div>`);
-        this.$image = jQuery(`<div class="sf-img-detail-image"><img src="${imageUrl}"></div>`);
+        this.$image = jQuery(`<div class="sf-img-detail-image"><img style="max-height:${maxheight}px" src="${imageUrl}"></div>`);
         this.$btnclose = jQuery(`<div class="sf-close-img-detail" data-click="img-detail-close"><span class="sf-close-img-detail-btn sf-icon-cancel "></span></div>`);
         this.$square = jQuery(`<div class="sf-img-detail-square"></div>`);
-        this._$container = jQuery(`<div class="sf-img-detail-container" style="max-width:${maxwidth}px"></div>`);
-        this._$container.append(this.$btnclose)
-        this._$container.append(this.$image);
-        this._$container.append(this.$square);
-        this._$container.append(this.$detail);
+        let $frame:JQuery<HTMLElement>=jQuery(`<div class="sf-img-detail-frame" style="max-width:${maxwidth}px"></div>`);
+        this._$container = jQuery(`<div class="sf-img-detail-container"></div>`);
+        $frame.append(this.$btnclose)
+        $frame.append(this.$image);
+        $frame.append(this.$square);
+        $frame.append(this.$detail);
+        this._$container.append($frame);
         let $body = jQuery("body");
         $body.append(this._$container);
     }

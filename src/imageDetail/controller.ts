@@ -45,7 +45,7 @@ function toFrameImage($img:JQuery<HTMLElement>,noicon:boolean,maxWidth:number | 
     let $btn:JQuery<HTMLElement> | null=null
     if(!noicon){
         let $frame:JQuery<HTMLElement>=jQuery(`<div class="sf-frame-imgDetail"></i></div>`);
-        $btn=jQuery(`<span class="sf-zoom-open"><i class="sf-icon-resize-full-2"></i></span>`);
+        $btn=jQuery(`<span class="sf-imgDetail-open"><i class="sf-icon-resize-full-2"></i></span>`);
         $frame.append($btn);
         $frame.insertBefore($img);
         $img.appendTo($frame);
