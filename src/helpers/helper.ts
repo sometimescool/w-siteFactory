@@ -8,6 +8,11 @@ export interface ISplited1Key {
     day: string; //jj
 }
 export class CDom {
+    static dataMouseMove(el: HTMLElement): string | null {
+        let value: string | null = null;
+        value = el.getAttribute("data-mouse-move");
+        return value;
+    }
     static dataClick(el: HTMLElement): string | null {
         let value: string | null = null;
         value = el.getAttribute("data-click");
@@ -16,6 +21,13 @@ export class CDom {
     static clickHandler(el: HTMLElement): HTMLElement {
         let elmt: HTMLElement | null = el;
         while (elmt != null && !CDom.dataClick(elmt)) {
+            elmt = elmt.parentElement;
+        }
+        return elmt as HTMLElement;
+    }
+    static mouseMoveHandler(el: HTMLElement): HTMLElement {
+        let elmt: HTMLElement | null = el;
+        while (elmt != null && !CDom.dataMouseMove(elmt)) {
             elmt = elmt.parentElement;
         }
         return elmt as HTMLElement;

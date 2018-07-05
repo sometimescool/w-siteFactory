@@ -6,7 +6,7 @@ import * as Tabsection from "./tabsection/controller";
 import * as ImgZoom from "./imageZoom/controller";
 import * as List from "./listes/controller";
 import * as ResponsiveTopNav from "./responsiveTopnav/controller";
-
+import * as ImageDetail from "./imageDetail/controller";
 export function calendarFactory():void{
     Calendar.calendarFactory()
 }
@@ -44,4 +44,7 @@ export function responsiveTopNavFactory(size:number|undefined){
 }
 export function responsiveTopNav(key:string,size:number|undefined){
     ResponsiveTopNav.responsiveTopNav(key,size);
+}
+export function imageDetailFactory(maxWidth:number|null):void{
+    ImageDetail.imageDetailFactory(maxWidth);
 }
