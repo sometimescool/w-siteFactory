@@ -62,10 +62,15 @@
     width: 24px;
     height: 24px;
     font-size: initial;
+    z-index:1000;
 }
 
 .sf-close-img-detail-btn{
-    color: #777
+    all: initial;
+    color: #777;
+    position: relative;
+    top: 2px;
+    left: 1px;
 }
 .sf-img-detail-frame{
     text-align:left;
@@ -88,9 +93,6 @@
     left:0;
     opacity:0.8;
 }
-.sf-close-img-detail{
-
-}
 .sf-img-detail-image{
     display:inline-block;
     position: relative;
@@ -98,10 +100,12 @@
     left: 0px;
     width:50%;
 }
-.sf-img-detail-result{
-    display:inline-block;
-    position: relative;
-    top: 0px;
-    left: 0px;
-    width:50%
+.sf-img-detail-result {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    margin-left: 1px;
 }
