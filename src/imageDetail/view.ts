@@ -7,16 +7,16 @@ export interface ISizes {
     width: number;
     height: number;
 }
-interface IPosition{
-    left:number;
-    top:number;
+export interface IPosition {
+    left: number;
+    top: number;
 }
 export class CImageDetailView {
     public $container: JQuery<HTMLElement> | null;
-    public $image: JQuery<HTMLElement> | null;
-    public $detail: JQuery<HTMLElement> | null;
-    public $btnclose: JQuery<HTMLElement> | null;
-    public $square: JQuery<HTMLElement> | null;
+    private $image: JQuery<HTMLElement> | null;
+    private $detail: JQuery<HTMLElement> | null;
+    private $btnclose: JQuery<HTMLElement> | null;
+    private $square: JQuery<HTMLElement> | null;
     constructor() {
 
     }
@@ -43,13 +43,13 @@ export class CImageDetailView {
         offset.height = this.$square.get(0).offsetHeight;
         return offset;
     }
-    public squarePosition(position:IPosition|undefined):IPosition{
-        let pos:IPosition=position||{left:0,top:0};
-        if(position){
+    public squarePosition(position: IPosition | undefined): IPosition {
+        let pos: IPosition = position || { left: 0, top: 0 };
+        if (position) {
             this.$square.get(0).style.left = position.left + "px";
             this.$square.get(0).style.top = position.top + "px";
-        }else{
-            pos=this.$square.position();
+        } else {
+            pos = this.$square.position();
         }
         return pos;
     }
@@ -59,8 +59,20 @@ export class CImageDetailView {
         sizes.height = this.$image.height();
         return sizes;
     }
-    public resultBackGroundPosition(left:number,top:number):void{
+    public imagePosition(): IPosition {
+        return this.$image.get(0).getBoundingClientRect();
+    }
+    public resultOffset(): IOffset {
+        let offset: IOffset = { width: 0, height: 0 }
+        offset.width = this.$detail.get(0).offsetWidth;
+        offset.height = this.$detail.get(0).offsetHeight;
+        return offset;
+    }
+    public resultBackGroundPosition(left: number, top: number): void {
         this.$detail.get(0).style.backgroundPosition = `-${left}px -${top}px`;
+    }
+    public resultBackGroundSize(width: number, height: number): void {
+        this.$detail.get(0).style.backgroundSize = `${width}px ${height}px`;
     }
     public destroy() {
         if (this.$container) {
