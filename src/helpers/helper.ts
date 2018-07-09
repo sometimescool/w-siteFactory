@@ -7,6 +7,63 @@ export interface ISplited1Key {
     month: string; //aaaa-mm,janvier: 01
     day: string; //jj
 }
+
+class COrientation {
+    private orientation: string;
+    private on: boolean = false;
+    private timer: number | null;
+    private static time: number = 100;
+    private static landscape: string = "landscape";
+    private static portrait: string = "portrait";
+    private callBacks: Map<string, Function> = new Map<string, Function>();
+    private static _instance: COrientation = new COrientation();
+    constructor() {
+        if (COrientation._instance) {
+            throw new Error("Error: Instantiation failed: Use COrientation.getInstance() instead of new.");
+        }
+        this.orientation = this.getOrientation();
+        COrientation._instance = this;
+    }
+    public static getInstance(): COrientation {
+        return COrientation._instance;
+    }
+    private triggerEvents(): void {
+        window.addEventListener("resize", (e: Event) => this.handleResize(e), false);
+    }
+    public onOrientationChange(callback: Function): string {
+        if (!this.on) {
+            this.triggerEvents();
+            this.on = true;
+        }
+        let _uuid: string = UUID();
+        this.callBacks.set(_uuid, callback);
+        return _uuid;
+    }
+    public removeOrientationChange(key: string): void {
+        if (this.callBacks.has(key)) {
+            this.callBacks.delete(key);
+        }
+    }
+    private handleResize(e: Event) {
+        clearTimeout(this.timer);
+        this.timer = setTimeout((e: Event) => this.reSize(e), COrientation.time);
+    }
+    private reSize(e: Event): void {
+        if (this.getOrientation() != this.orientation) {
+            let orientation: string = this.getOrientation();
+            this.orientation = orientation;
+            this.broadcast(orientation);
+        }
+    }
+    private broadcast(orientation: string): void {
+        this.callBacks.forEach((value, key, map) => value(orientation))
+    }
+    private getOrientation(): string {
+        return window.outerWidth > window.outerHeight ? COrientation.landscape : COrientation.portrait;
+    }
+}
+export let orientation: COrientation = COrientation.getInstance();
+
 export class CDom {
     static dataMouseMove(el: HTMLElement): string | null {
         let value: string | null = null;
@@ -116,4 +173,13 @@ export class CDate {
         let numWeek: number = 0;
         return Math.floor((date.getDate() + CDate.getFrenchFirstDay(date) - 1) / 7);
     }
+}
+
+export let UUID=function (): string {
+    return 'sf_xxxxxxxx-xxxxxxx-xxxx-xxxxxxxxxxxx'.replace(/[x]/g,
+        c => {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
 }

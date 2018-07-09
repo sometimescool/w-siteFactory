@@ -1,2 +1,3 @@
 node_modules/
-dist/w-siteFactory.js
+tools/
+test/

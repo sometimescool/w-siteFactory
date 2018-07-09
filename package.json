@@ -1,0 +1,21 @@
+{
+  "name": "w-siteFactory",
+  "version": "1.0.3",
+  "description": "Bundle Front-end components",
+  "keywords": [
+    "w-siteFactory",
+    "Front-end components",
+    "bundle"
+  ],
+  "license":"GPL-3.0",
+  "repository" :
+  { "type" : "git",
+    "url" : "https://github.com/sometimescool/w-siteFactory.git"
+  },
+  "homepage": "https://github.com/sometimescool/w-siteFactory#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-minify": "^0.4.3"
+  }
+}

@@ -20,13 +20,13 @@ export class CImageDetailView {
     constructor() {
 
     }
-    public draw(imageUrl: string, maxwidth: number) {
-        let maxheight: number = screen.height;
-        this.$detail = jQuery(`<div class="sf-img-detail-result" style="background-image:url('${imageUrl}')"></div>`);
+    public draw(image: any, maxwidth: number) {
+        let maxheight: number = window.outerHeight - (window.outerHeight*20/100 + 30);
+        this.$detail = jQuery(`<div class="sf-img-detail-result" style="background-image:url('${image.src}')"></div>`);
         this.$image = jQuery(`<div class="sf-img-detail-image" data-mouse-move="move-image"></div>`);
         this.$square = jQuery(`<div class="sf-img-detail-square" data-mouse-move="move-square"></div>`);
         this.$image.append(this.$square)
-        this.$image.append(`<img style="max-height:${maxheight}px" src="${imageUrl}">`);
+        this.$image.append(`<img style="max-height:${maxheight}px" src="${image.src}">`);
         this.$btnclose = jQuery(`<div class="sf-close-img-detail" data-click="img-detail-close"><span class="sf-close-img-detail-btn sf-icon-cancel "></span></div>`);
         let $frame: JQuery<HTMLElement> = jQuery(`<div class="sf-img-detail-frame" style="max-width:${maxwidth}px"></div>`);
         this.$container = jQuery(`<div class="sf-img-detail-container"></div>`);

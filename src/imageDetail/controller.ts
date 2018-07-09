@@ -1,11 +1,13 @@
 type PromiseResolve<T> = (value?: T | PromiseLike<T>) => void;
 type PromiseReject = (error?: any) => void;
+declare var Promise: any;
 
 import { CDom } from "../helpers/helper";
 import { CImageDetailView } from "./view";
 import { IOffset } from "./view";
 import { ISizes } from "./view";
 import { IPosition } from "./view";
+import {orientation} from "../helpers/helper";
 
 interface ICursorPos {
     x: number;
@@ -18,23 +20,54 @@ interface IRation {
 class CImageDetail {
     private static _instance: CImageDetail = new CImageDetail();
     private view: CImageDetailView;
-    private ratio: IRation = { cx: 0, cy: 0 }
+    private ratio: IRation = { cx: 0, cy: 0 };
+    private imageUrl:string="";
+    private width:number|undefined;
+    /* uuid permet removeOrientationChange (inutile dans le context présent)*/
+    private orientation:string;
     constructor() {
-        if (CImageDetail._instance) {
+        if (CImageDetail._instance)
             throw new Error("Error: Instantiation failed: Use CImageDetail.getInstance() instead of new.");
-        }
-        this.view = new CImageDetailView();
         CImageDetail._instance = this;
+        this.orientation=orientation.onOrientationChange((orientation:string)=>this.orientationChange(orientation));
+    }
+    private test(orientation:string):void{
+        console.log(`test ${orientation}`);
+    }
+    private orientationChange(orientation:string):void{
+        console.log(`Orientationchange CImageDetail${this.imageUrl}`)
+        if(this.imageUrl!=""){
+                console.log("zoom auto")
+                this.zoom(this.imageUrl,this.width);
+        }
     }
     public static getInstance(): CImageDetail {
         return CImageDetail._instance;
     }
     public zoom(imgUrl: string, maxwidth: number): void {
+        orientation.removeOrientationChange(this.orientation);
         this.destroy();
-        this.view.draw(imgUrl, maxwidth);
-        this.setRation();
-        this.triggerEvents();
+        this.view = new CImageDetailView();
+        this.imageUrl=imgUrl;
+        this.width=maxwidth;
+        let self:any=this;
+        this.promiseImage(imgUrl).then((image:any)=>{
+            self.view.draw(image, maxwidth);
+            self.setRation();
+            self.triggerEvents();
+        })
     }
+    private promiseImage(imageUrl:string): any {
+		let self = this;
+		try {
+			return new Promise((resolve: PromiseResolve<any>, reject: PromiseReject): void => {
+                let image:any= new Image();
+                image.src = imageUrl;
+                image.onload=()=>resolve(image);
+                image.onerror=()=>reject("image");
+			});
+		} catch (e) { throw Error("Promise") }
+	}
     private setRation(): void {
         let squareOffset: IOffset = this.view.squareOffset();
         let resultOffset: IOffset = this.view.resultOffset();
@@ -75,14 +108,16 @@ class CImageDetail {
         this.destroy();
     }
     private destroy(): void {
+        this.imageUrl="";
+        this.width=undefined;
         //clean events
-        if (this.view && this.view.$container) {
+        if (this.view) {
             this.view.$container.get(0).removeEventListener("click", (e: Event) => this.handleClick(e), false);
             this.view.$container.get(0).removeEventListener("mousemove", (e: Event) => this.handleMouseMove(e), false);
-            this.view.$container.get(0).removeEventListener("touchmove", (e: Event) => this.handleMouseMove(e), false)
+            this.view.$container.get(0).removeEventListener("touchmove", (e: Event) => this.handleMouseMove(e), false);
+            this.view.destroy();
+            this.view=null;
         }
-        //clean HTML
-        this.view.destroy();
     }
     private moveSquare(e: any): void {
         let pos: ICursorPos, squareOffset: IOffset, imgSizes: ISizes, x: number, y: number;
@@ -123,7 +158,10 @@ class CImageDetail {
 /*Mise en place du bouton d'ouverture du composant sur l'image à zoomer*/
 function triggerEvents($img: JQuery<HTMLElement>, $trigger: JQuery<HTMLElement> | null, maxWidth: number | null): void {
     let $triggerElement: JQuery<HTMLElement> = $trigger || $img;
-    if ($triggerElement.length > 0) $triggerElement.get(0).addEventListener("click", (e: Event) => CImageDetail.getInstance().zoom($img.attr("src"), maxWidth), false);
+    let src:string=$img.data("detail") || $img.attr("src");
+    let img:any=new Image();
+    img.src=src;
+    if ($triggerElement.length > 0) $triggerElement.get(0).addEventListener("click", (e: Event) => CImageDetail.getInstance().zoom(src, maxWidth), false);
 }
 function toFrameImage($img: JQuery<HTMLElement>, noicon: boolean, maxWidth: number | null) {
     let $btn: JQuery<HTMLElement> | null = null
