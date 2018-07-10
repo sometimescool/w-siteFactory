@@ -151,7 +151,7 @@ export class CrCalendar implements ICalendar {
 	}
 	dayDepartureSelectable(date: Date): Array<any> { //called by jsquery calendar popup
 		let configDay: any = this.getDateConfigDay(date);
-		let selectable: boolean = !configDay.overDate && (!configDay.rent ||  (!configDay.end && configDay.start));
+		let selectable: boolean = !configDay.overDate && (!configDay.rent || (!configDay.end && configDay.start));
 		let css: string = selectable ? configDay.typeMorning : "";
 		return [selectable, css, ""];
 	}
@@ -176,7 +176,7 @@ export function calendarFactory(): void {
 }
 export function calendar(id: string): CrCalendar | null {
 	let $container: JQuery<HTMLElement> = jQuery(`#${id}`);
-	if($container.length==0) return null;
+	if ($container.length == 0) return null;
 	let params: ICalendarParams = $container.data("params");
 	let cal = new CrCalendar($container, params);
 	cal.show();
