@@ -45,17 +45,28 @@ class CImageDetail {
         return CImageDetail._instance;
     }
     public zoom(imgUrl: string, maxwidth: number): void {
-        orientation.removeOrientationChange(this.orientation);
         this.destroy();
         this.view = new CImageDetailView();
         this.imageUrl=imgUrl;
         this.width=maxwidth;
         let self:any=this;
         this.promiseImage(imgUrl).then((image:any)=>{
-            self.view.draw(image, maxwidth);
+            self.view.draw(image, self.width,self.maxHeight(),self.frameWidth(image, self.width));
+            self.zoomLimit(self.view.imageSizes());
             self.setRation();
             self.triggerEvents();
         })
+    }
+    /*Largeur du frame en %*/
+    private frameWidth(image:any,maxWidth:number):number{
+        if(image.height <= this.maxHeight()) return 97;
+        let ratioH=this.maxHeight()/image.height;
+        let finalImageWidth=image.width*ratioH;
+        let ratio=finalImageWidth*2*100/ (window.innerWidth);
+        return Math.min(ratio,97);
+    }
+    private maxHeight():number{
+        return window.innerHeight - (window.innerHeight * 20 / 100);
     }
     private promiseImage(imageUrl:string): any {
 		let self = this;
@@ -67,14 +78,19 @@ class CImageDetail {
                 image.onerror=()=>reject("image");
 			});
 		} catch (e) { throw Error("Promise") }
-	}
+    }
+    private zoomLimit(imageSizes:ISizes):void{
+        let greaterSize=Math.max(parseInt(imageSizes.width as string,10),parseInt(imageSizes.height as string,10));
+        let sizeSquare: number =greaterSize/10;
+        this.view.squareSizes({width:sizeSquare,height:sizeSquare});
+    }
     private setRation(): void {
         let squareOffset: IOffset = this.view.squareOffset();
         let resultOffset: IOffset = this.view.resultOffset();
         let imageSizes: ISizes = this.view.imageSizes();
         this.ratio.cx = resultOffset.width / squareOffset.width;
         this.ratio.cy = resultOffset.height / squareOffset.height;
-        this.view.resultBackGroundSize(imageSizes.width * this.ratio.cx, imageSizes.height * this.ratio.cy);
+        this.view.resultBackGroundSize(parseInt(imageSizes.width as string,10) * this.ratio.cx, parseInt(imageSizes.height as string,10) * this.ratio.cy);
     }
     private triggerEvents(): void {
         this.view.$container.get(0).addEventListener("click", (e: Event) => this.handleClick(e), false);
@@ -127,13 +143,15 @@ class CImageDetail {
         pos = this.getCursorPos(e);
         squareOffset = this.view.squareOffset();
         imgSizes = this.view.imageSizes();
+        let imageWidth:number=parseInt(imgSizes.width as string, 10);
+        let imageHeight:number=parseInt(imgSizes.height as string, 10);
         /*calculate the position of the square:*/
         x = pos.x - (squareOffset.width / 2);
         y = pos.y - (squareOffset.height / 2);
         /*prevent the square from being positioned outside the image:*/
-        if (x > imgSizes.width - squareOffset.width) { x = imgSizes.width - squareOffset.width }
+        if (x > imageWidth - squareOffset.width) { x = imageWidth - squareOffset.width }
         if (x < 0) { x = 0; }
-        if (y > imgSizes.height - squareOffset.height) { y = imgSizes.height - squareOffset.height }
+        if (y > imageHeight - squareOffset.height) { y = imageHeight - squareOffset.height }
         if (y < 0) { y = 0; }
         /*set the position of the square:*/
         this.view.squarePosition({ left: x, top: y });

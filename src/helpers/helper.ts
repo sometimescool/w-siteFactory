@@ -56,7 +56,7 @@ class COrientation {
         }
     }
     private broadcast(orientation: string): void {
-        this.callBacks.forEach((value, key, map) => value(orientation))
+        this.callBacks.forEach((value, key, map) => {value(orientation)})
     }
     private getOrientation(): string {
         return window.outerWidth > window.outerHeight ? COrientation.landscape : COrientation.portrait;

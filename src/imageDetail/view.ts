@@ -4,8 +4,8 @@ export interface IOffset {
     height: number;
 }
 export interface ISizes {
-    width: number;
-    height: number;
+    width: number | string;
+    height: number | string;
 }
 export interface IPosition {
     left: number;
@@ -18,10 +18,8 @@ export class CImageDetailView {
     private $btnclose: JQuery<HTMLElement> | null;
     private $square: JQuery<HTMLElement> | null;
     constructor() {
-
     }
-    public draw(image: any, maxwidth: number) {
-        let maxheight: number = window.outerHeight - (window.outerHeight*20/100 + 30);
+    public draw(image: any, maxwidth: number,maxheight:number, frameWidth:number) {
         this.$detail = jQuery(`<div class="sf-img-detail-result" style="background-image:url('${image.src}')"></div>`);
         this.$image = jQuery(`<div class="sf-img-detail-image" data-mouse-move="move-image"></div>`);
         this.$square = jQuery(`<div class="sf-img-detail-square" data-mouse-move="move-square"></div>`);
@@ -35,7 +33,10 @@ export class CImageDetailView {
         $frame.append(this.$detail);
         this.$container.append($frame);
         let $body = jQuery("body");
-        $body.append(this.$container);
+        $body.append(this.$container); 
+        let width:number=Math.min($frame.width(),frameWidth);
+        $frame.width(`${width}%`);
+
     }
     public squareOffset(): IOffset {
         let offset: IOffset = { width: 0, height: 0 }
@@ -43,7 +44,18 @@ export class CImageDetailView {
         offset.height = this.$square.get(0).offsetHeight;
         return offset;
     }
-    public squarePosition(position: IPosition | undefined): IPosition {
+    public squareSizes(sizes?: ISizes): ISizes {
+        let sSizes: ISizes = sizes || { width: 0, height: 0 };
+        if (sizes) {
+            this.$square.width(sizes.width);
+            this.$square.height(sizes.height);
+        } else {
+            sSizes.width = this.$square.width();
+            sSizes.height = this.$square.height();
+        }
+        return sSizes;
+    }
+    public squarePosition(position?: IPosition): IPosition {
         let pos: IPosition = position || { left: 0, top: 0 };
         if (position) {
             this.$square.get(0).style.left = position.left + "px";
@@ -53,11 +65,16 @@ export class CImageDetailView {
         }
         return pos;
     }
-    public imageSizes(): ISizes {
-        let sizes: IOffset = { width: 0, height: 0 }
-        sizes.width = this.$image.width();
-        sizes.height = this.$image.height();
-        return sizes;
+    public imageSizes(sizes?: ISizes): ISizes {
+        let iSizes: ISizes = sizes || { width: 0, height: 0 }
+        if (sizes) {
+            this.$image.width(iSizes.width);
+            this.$image.height(iSizes.height);
+        } else {
+            iSizes.width = this.$image.width();
+            iSizes.height = this.$image.height();
+        }
+        return iSizes;
     }
     public imagePosition(): IPosition {
         return this.$image.get(0).getBoundingClientRect();

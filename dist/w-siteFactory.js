@@ -90,7 +90,7 @@ var wsiteFactory = (function () {
               }
           }
           broadcast(orientation) {
-              this.callBacks.forEach((value, key, map) => value(orientation));
+              this.callBacks.forEach((value, key, map) => { value(orientation); });
           }
           getOrientation() {
               return window.outerWidth > window.outerHeight ? COrientation.landscape : COrientation.portrait;
@@ -1545,8 +1545,7 @@ var wsiteFactory = (function () {
       class CImageDetailView {
           constructor() {
           }
-          draw(image, maxwidth) {
-              let maxheight = window.outerHeight - (window.outerHeight * 20 / 100 + 30);
+          draw(image, maxwidth, maxheight, frameWidth) {
               this.$detail = jQuery(`<div class="sf-img-detail-result" style="background-image:url('${image.src}')"></div>`);
               this.$image = jQuery(`<div class="sf-img-detail-image" data-mouse-move="move-image"></div>`);
               this.$square = jQuery(`<div class="sf-img-detail-square" data-mouse-move="move-square"></div>`);
@@ -1561,12 +1560,26 @@ var wsiteFactory = (function () {
               this.$container.append($frame);
               let $body = jQuery("body");
               $body.append(this.$container);
+              let width = Math.min($frame.width(), frameWidth);
+              $frame.width(`${width}%`);
           }
           squareOffset() {
               let offset = { width: 0, height: 0 };
               offset.width = this.$square.get(0).offsetWidth;
               offset.height = this.$square.get(0).offsetHeight;
               return offset;
+          }
+          squareSizes(sizes) {
+              let sSizes = sizes || { width: 0, height: 0 };
+              if (sizes) {
+                  this.$square.width(sizes.width);
+                  this.$square.height(sizes.height);
+              }
+              else {
+                  sSizes.width = this.$square.width();
+                  sSizes.height = this.$square.height();
+              }
+              return sSizes;
           }
           squarePosition(position) {
               let pos = position || { left: 0, top: 0 };
@@ -1579,11 +1592,17 @@ var wsiteFactory = (function () {
               }
               return pos;
           }
-          imageSizes() {
-              let sizes = { width: 0, height: 0 };
-              sizes.width = this.$image.width();
-              sizes.height = this.$image.height();
-              return sizes;
+          imageSizes(sizes) {
+              let iSizes = sizes || { width: 0, height: 0 };
+              if (sizes) {
+                  this.$image.width(iSizes.width);
+                  this.$image.height(iSizes.height);
+              }
+              else {
+                  iSizes.width = this.$image.width();
+                  iSizes.height = this.$image.height();
+              }
+              return iSizes;
           }
           imagePosition() {
               return this.$image.get(0).getBoundingClientRect();
@@ -1635,17 +1654,29 @@ var wsiteFactory = (function () {
               return CImageDetail._instance;
           }
           zoom(imgUrl, maxwidth) {
-              helper_12.orientation.removeOrientationChange(this.orientation);
               this.destroy();
               this.view = new view_3.CImageDetailView();
               this.imageUrl = imgUrl;
               this.width = maxwidth;
               let self = this;
               this.promiseImage(imgUrl).then((image) => {
-                  self.view.draw(image, maxwidth);
+                  self.view.draw(image, self.width, self.maxHeight(), self.frameWidth(image, self.width));
+                  self.zoomLimit(self.view.imageSizes());
                   self.setRation();
                   self.triggerEvents();
               });
+          }
+          /*Largeur du frame en %*/
+          frameWidth(image, maxWidth) {
+              if (image.height <= this.maxHeight())
+                  return 97;
+              let ratioH = this.maxHeight() / image.height;
+              let finalImageWidth = image.width * ratioH;
+              let ratio = finalImageWidth * 2 * 100 / (window.innerWidth);
+              return Math.min(ratio, 97);
+          }
+          maxHeight() {
+              return window.innerHeight - (window.innerHeight * 20 / 100);
           }
           promiseImage(imageUrl) {
               let self = this;
@@ -1661,13 +1692,18 @@ var wsiteFactory = (function () {
                   throw Error("Promise");
               }
           }
+          zoomLimit(imageSizes) {
+              let greaterSize = Math.max(parseInt(imageSizes.width, 10), parseInt(imageSizes.height, 10));
+              let sizeSquare = greaterSize / 10;
+              this.view.squareSizes({ width: sizeSquare, height: sizeSquare });
+          }
           setRation() {
               let squareOffset = this.view.squareOffset();
               let resultOffset = this.view.resultOffset();
               let imageSizes = this.view.imageSizes();
               this.ratio.cx = resultOffset.width / squareOffset.width;
               this.ratio.cy = resultOffset.height / squareOffset.height;
-              this.view.resultBackGroundSize(imageSizes.width * this.ratio.cx, imageSizes.height * this.ratio.cy);
+              this.view.resultBackGroundSize(parseInt(imageSizes.width, 10) * this.ratio.cx, parseInt(imageSizes.height, 10) * this.ratio.cy);
           }
           triggerEvents() {
               this.view.$container.get(0).addEventListener("click", (e) => this.handleClick(e), false);
@@ -1720,18 +1756,20 @@ var wsiteFactory = (function () {
               pos = this.getCursorPos(e);
               squareOffset = this.view.squareOffset();
               imgSizes = this.view.imageSizes();
+              let imageWidth = parseInt(imgSizes.width, 10);
+              let imageHeight = parseInt(imgSizes.height, 10);
               /*calculate the position of the square:*/
               x = pos.x - (squareOffset.width / 2);
               y = pos.y - (squareOffset.height / 2);
               /*prevent the square from being positioned outside the image:*/
-              if (x > imgSizes.width - squareOffset.width) {
-                  x = imgSizes.width - squareOffset.width;
+              if (x > imageWidth - squareOffset.width) {
+                  x = imageWidth - squareOffset.width;
               }
               if (x < 0) {
                   x = 0;
               }
-              if (y > imgSizes.height - squareOffset.height) {
-                  y = imgSizes.height - squareOffset.height;
+              if (y > imageHeight - squareOffset.height) {
+                  y = imageHeight - squareOffset.height;
               }
               if (y < 0) {
                   y = 0;
