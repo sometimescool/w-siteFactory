@@ -70,6 +70,13 @@ export class CDom {
         value = el.getAttribute("data-mouse-move");
         return value;
     }
+    static mouseMoveHandler(el: HTMLElement): HTMLElement {
+        let elmt: HTMLElement | null = el;
+        while (elmt != null && !CDom.dataMouseMove(elmt)) {
+            elmt = elmt.parentElement;
+        }
+        return elmt as HTMLElement;
+    }
     static dataClick(el: HTMLElement): string | null {
         let value: string | null = null;
         value = el.getAttribute("data-click");
@@ -78,13 +85,6 @@ export class CDom {
     static clickHandler(el: HTMLElement): HTMLElement {
         let elmt: HTMLElement | null = el;
         while (elmt != null && !CDom.dataClick(elmt)) {
-            elmt = elmt.parentElement;
-        }
-        return elmt as HTMLElement;
-    }
-    static mouseMoveHandler(el: HTMLElement): HTMLElement {
-        let elmt: HTMLElement | null = el;
-        while (elmt != null && !CDom.dataMouseMove(elmt)) {
             elmt = elmt.parentElement;
         }
         return elmt as HTMLElement;
@@ -176,10 +176,9 @@ export class CDate {
 }
 
 export let UUID=function (): string {
-    return 'sf_xxxxxxxx-xxxxxxx-xxxx-xxxxxxxxxxxx'.replace(/[x]/g,
-        c => {
-            var r = Math.random() * 16 | 0,
-                v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        let r:number = Math.random() * 16 | 0, v:number = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
 }
+
